@@ -535,8 +535,19 @@ export default function HotelLiminal(){
         {phase===PHASE.RULES_P2&&<RulesScreen page={2} highlightRules={[]} onNext={()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("7_room_right_b");setCurFloor(7);setT("객실 712호.\n\n테이블 위에 놓여있던 규칙서를 대충 훑어봤다.\n\n침대에 누웠다.\n\n...\n\n배가 고프다.\n\n시계를 보니 새벽 2시 47분.\n\n편의점이라도 다녀와야겠다.");setChoices([{text:"객실을 나선다",action:()=>{tr(()=>{setLoc("7_room_right_b");setT("복도로 나왔다.\n\n뒤를 돌아보니 문이 닫혀 있다.\n\n주머니를 뒤졌다.\n\n지갑이 없다. 방 안에 두고 나온 것 같다.\n\n카드키도 없다.\n\n프론트에 가서 카드키를 다시 받아야겠다.");setChoices([]);setNavOff(false);advTime(1);});}}]);setNavOff(true);});}}/>}
         {phase===PHASE.DEATH&&(<div className="death-screen"><div className="death-text">{deathText}</div>{deathRules.length>0&&<DeathRulesViewer rules={deathRules} onRestart={resetGame}/>}</div>)}
         {phase===PHASE.ACCUM_DEATH&&(<div className="death-screen"><div className="death-text">문이 열려있다.</div>{deathRules.length>0&&<DeathRulesViewer rules={deathRules} onRestart={resetGame}/>}</div>)}
-        {phase===PHASE.CLEAR&&(<div className="clear-screen"></div><div className="clear-text">문을 닫았다.<br/><br/>무슨 일이 있었던 걸까..<br/><br/></div><div className="clear-sub">생존</div><button className="clear-btn" onClick={resetGame}>처음으로</button></div>)}
-        {phase===PHASE.GAME&&(<>
+      {phase === PHASE.CLEAR && (
+  <>
+    <div className="clear-screen"></div>
+    <div className="clear-text">
+      문을 닫았다.<br/><br/>
+      무슨 일이 있었던 걸까..<br/><br/>
+    </div>
+    <div className="clear-sub">생존</div>
+    <button className="clear-btn" onClick={resetGame}>처음으로</button>
+  </>
+)}
+{phase === PHASE.GAME && (
+  <>
           {!textDone&&<div className="text-advance-overlay" onClick={()=>advRef.current&&advRef.current()}/>}
           <div className="game-content">
             <div className="scene-header"><div className="header-left"><FloorIndicator floor={curFloor}/><span className="scene-location">{LOCATIONS[loc]?.name||loc}</span></div><span className="scene-time">{gameTime}</span></div>
