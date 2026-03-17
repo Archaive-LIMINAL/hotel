@@ -216,20 +216,21 @@ export default function HotelLiminal(){
     }
     // Fake7 corridor after elev called
     if(f.fake7ElevCalled&&(dest==="f7_cor_upper"||dest==="f7_cor_lower")){die("뒤에서 무언가가 다가왔다.",8);return;}
-    // 3F sound death - check using ref for fresh flags
-    if(f.eventPhase===6&&f.floor3Arrived&&!f.floor3Fled){
+    // 3F sound death - any phase during floor3
+    if(f.eventPhase===6&&f.floor3Arrived){
+      // After fled: rooms trigger blackout event, not sound death
+      if(f.floor3Fled&&(dest==="3_room_left_a"||dest==="3_room_left_b")){
+        snd.play("snd_powercut",{volume:0.6});
+        tr(()=>{setLoc(dest);setBrightness("blackout");setNavOff(true);setShowElev(false);setCurFloor(3);
+          setT("객실 앞까지 왔다.\n\n정전.\n\n복도 쪽에서 소리가 들린다.\n\n하나의 객실 문이 열려있다.");
+          setChoices([
+            {text:"열린 객실로 들어간다",action:()=>die("열려있는 방에서 무언가 나왔다.",7)},
+            {text:"복도 끝에 몸을 숨긴다",action:()=>{snd.stop("snd_chase");tr(()=>{setBrightness("normal");setT("복도 끝에 웅크렸다.\n\n완전한 어둠.\n\n발소리가 지나간다.\n\n...\n\n불이 다시 켜졌다.");uF({floor3Hidden:true,eventPhase:7,soundLocs:[]});setChoices([]);setNavOff(false);});}},
+          ]);
+        });return;
+      }
+      // Sound direction = death
       if(f.soundLocs.includes(dest)){die("뒤에서 무언가가 다가왔다.",1);return;}
-    }
-    // 3F chase: upper corridor → rooms = blackout event
-    if(f.eventPhase===6&&f.floor3Fled&&(dest==="3_room_left_a"||dest==="3_room_left_b")){
-      snd.play("snd_powercut",{volume:0.6});
-      tr(()=>{setLoc(dest);setBrightness("blackout");setNavOff(true);setShowElev(false);setCurFloor(3);
-        setT("객실 앞까지 왔다.\n\n정전.\n\n복도 쪽에서 소리가 들린다.\n\n하나의 객실 문이 열려있다.");
-        setChoices([
-          {text:"열린 객실로 들어간다",action:()=>die("열려있는 방에서 무언가 나왔다.",7)},
-          {text:"복도 끝에 몸을 숨긴다",action:()=>{snd.stop("snd_chase");tr(()=>{setBrightness("normal");setT("복도 끝에 웅크렸다.\n\n완전한 어둠.\n\n발소리가 지나간다.\n\n...\n\n불이 다시 켜졌다.");uF({floor3Hidden:true,eventPhase:7,soundLocs:[]});setChoices([]);setNavOff(false);});}},
-        ]);
-      });return;
     }
     tr(()=>{setLoc(dest);setChoices([]);setNavOff(false);setShowElev(false);const ld=LOCATIONS[dest];if(ld&&ld.floor&&typeof ld.floor==="number")setCurFloor(ld.floor);handleArr(dest);});
   },[tr,die,uF,snd]);
@@ -304,12 +305,12 @@ export default function HotelLiminal(){
       }
       setBrightness("dark");setT("3층 엘리베이터 앞.");setChoices([]);setNavOff(false);return;
     }
-    // 3F chase: upper corridor safe
-    if(l==="3_corridor_upper"&&f.eventPhase===6&&f.floor3Fled){
+    // 3F chase: upper corridor - safe route (works before and after floor3Fled)
+    if(l==="3_corridor_upper"&&f.eventPhase===6&&f.floor3Arrived){
       uF({soundLocs:["3_elev_area"]});setBrightness("dark");setT("상부 복도로 왔다.\n\n엘리베이터 쪽에서 소리가 들린다.");setChoices([]);setNavOff(false);return;
     }
-    // 3F: lower corridor → show elev sound
-    if(l==="3_corridor_lower"&&f.eventPhase===6&&f.floor3Fled){
+    // 3F: lower corridor
+    if(l==="3_corridor_lower"&&f.eventPhase===6&&f.floor3Arrived){
       uF({soundLocs:["3_elev_area"]});setBrightness("dark");setT("하부 복도로 왔다.\n\n엘리베이터 쪽에서 소리가 들린다.");setChoices([]);setNavOff(false);return;
     }
     // Post-hide
@@ -531,10 +532,10 @@ export default function HotelLiminal(){
       <div className={`game-frame ${!fade?"fading":""}`}>
         {phase===PHASE.TITLE&&(<div className="title-screen"><div className="title-number">712</div><div className="title-name">HOTEL LIMINAL</div><div className="title-divider"/><div className="title-tagline">규칙을 기억하세요</div><button className="title-start" onClick={()=>{snd.startBg();tr(()=>setPhase(PHASE.RULES));}}>체크인</button></div>)}
         {phase===PHASE.RULES&&<RulesScreen page={1} highlightRules={[]} onNext={()=>tr(()=>setPhase(PHASE.RULES_P2))}/>}
-        {phase===PHASE.RULES_P2&&<RulesScreen page={2} highlightRules={[]} onNext={()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("7_room_right_b");setCurFloor(7);setT("객실 712호.\n\n테이블 위에 놓여있던 규칙서를 대충 훑어봤다.\n\n침대에 누웠다.\n\n...\n\n배가 고프다.\n\n시계를 보니 새벽 2시 47분.\n\n편의점이라도 다녀와야겠다.");setChoices([{text:"객실을 나선다",action:()=>{tr(()=>{setLoc("7_room_right_b");setT("복도로 나왔다.\n\n뒤를 돌아보니 문이 닫혀 있다.\n\n주머니를 뒤졌다.\n\n카드키가 없다.\n\n방 안에 두고 나온 것 같다.");setChoices([]);setNavOff(false);advTime(1);});}}]);setNavOff(true);});}}/>}
+        {phase===PHASE.RULES_P2&&<RulesScreen page={2} highlightRules={[]} onNext={()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("7_room_right_b");setCurFloor(7);setT("객실 712호.\n\n테이블 위에 놓여있던 규칙서를 대충 훑어봤다.\n\n침대에 누웠다.\n\n...\n\n배가 고프다.\n\n시계를 보니 새벽 2시 47분.\n\n편의점이라도 다녀와야겠다.");setChoices([{text:"객실을 나선다",action:()=>{tr(()=>{setLoc("7_room_right_b");setT("복도로 나왔다.\n\n뒤를 돌아보니 문이 닫혀 있다.\n\n주머니를 뒤졌다.\n\n지갑이 없다. 방 안에 두고 나온 것 같다.\n\n카드키도 없다.\n\n프론트에 가서 카드키를 다시 받아야겠다.");setChoices([]);setNavOff(false);advTime(1);});}}]);setNavOff(true);});}}/>}
         {phase===PHASE.DEATH&&(<div className="death-screen"><div className="death-text">{deathText}</div>{deathRules.length>0&&<DeathRulesViewer rules={deathRules} onRestart={resetGame}/>}</div>)}
         {phase===PHASE.ACCUM_DEATH&&(<div className="death-screen"><div className="death-text">문이 열려있다.</div>{deathRules.length>0&&<DeathRulesViewer rules={deathRules} onRestart={resetGame}/>}</div>)}
-        {phase===PHASE.CLEAR&&(<div className="clear-screen"><div className="clear-time">AM 6:00</div><div className="clear-text">문을 닫았다.<br/><br/>창문 사이로 햇빛이 들어온다.<br/><br/>밤이 끝났다.</div><div className="clear-sub">생존</div><button className="clear-btn" onClick={resetGame}>처음으로</button></div>)}
+        {phase===PHASE.CLEAR&&(<div className="clear-screen"></div><div className="clear-text">문을 닫았다.<br/><br/>무슨 일이 있었던 걸까..<br/><br/></div><div className="clear-sub">생존</div><button className="clear-btn" onClick={resetGame}>처음으로</button></div>)}
         {phase===PHASE.GAME&&(<>
           {!textDone&&<div className="text-advance-overlay" onClick={()=>advRef.current&&advRef.current()}/>}
           <div className="game-content">
