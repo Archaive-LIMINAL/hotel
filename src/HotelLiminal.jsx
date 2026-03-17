@@ -37,7 +37,7 @@ const RULES = {
     "8. 使用していない客室は施錠されています。扉が開いている客室には他の宿泊客がいる可能性があるため、ご注意ください。",
     "9. スタッフが客室をノックすることはありません。",
     "10. カードキー紛失時はフロントデスクにて再発行が可能です。",
-    "11. 貴重品の紛失について、ホテルは一切の責任을負いません。",
+    "11. 貴重品の紛失について、ホテルは一切の責任を負いません。",
     "12. 23時から6時まではフロントにスタッフがおりません。CCTVで確認しておりますので、その場でお待ちください。",
     "13. 他の宿泊客に話しかけたり、接触したりしないようお願いいたします。",
     "14. 他の宿泊客に迷惑をかける行為はご遠慮ください。",
@@ -90,11 +90,11 @@ const LOCATIONS = {
   "1_front_desk": { name: { ko: "프론트 데스크", ja: "フロントデスク" }, short: { ko: "프론트", ja: "フロント" }, floor: 1, connections: [{ to: "1_lobby", dir: "right" }] },
   "1_entrance": { name: { ko: "정문", ja: "正門" }, short: { ko: "정문", ja: "正門" }, floor: 1, connections: [{ to: "1_lobby", dir: "left" }] },
   "1_elev_area": { name: { ko: "엘리베이터/계단", ja: "エレベーター/階段" }, short: { ko: "엘리베이터", ja: "エレベーター" }, floor: 1, isElev: true, connections: [{ to: "1_lobby", dir: "left" }] },
-  "elev_inside": { name: { ko: "엘리베이터 내부", ja: "エレベーター内部" }, short: { ko: "엘리베이터", ja: "エレベ이터" }, floor: "—", isElev: true, connections: [] },
+  "elev_inside": { name: { ko: "엘리베이터 내부", ja: "エレベーター内部" }, short: { ko: "엘리베이터", ja: "エレベーター" }, floor: "—", isElev: true, connections: [] },
   "stairs": { name: { ko: "비상계단", ja: "非常階段" }, short: { ko: "계단", ja: "階段" }, floor: "—", connections: [] },
   "f7_elev": { name: { ko: "엘리베이터/계단", ja: "エレベーター/階段" }, short: { ko: "엘리베이터", ja: "エレベーター" }, floor: 7, isElev: true, connections: [{ to: "f7_cor_upper", dir: "left" }, { to: "f7_cor_lower", dir: "right" }] },
   "f7_cor_upper": { name: { ko: "상부 복도", ja: "上部廊下" }, short: { ko: "상부 복도", ja: "上部廊下" }, floor: 7, connections: [{ to: "f7_room_upper", dir: "left" }, { to: "f7_room_lower", dir: "right" }, { to: "f7_elev", dir: "right" }] },
-  "f7_cor_lower": { name: { ko: "하부 복도", ja: "下部廊下" }, short: { ko: "下부廊下" }, floor: 7, connections: [{ to: "f7_room_upper", dir: "left" }, { to: "f7_room_lower", dir: "right" }, { to: "f7_elev", dir: "left" }] },
+  "f7_cor_lower": { name: { ko: "하부 복도", ja: "下部廊下" }, short: { ko: "하부 복도", ja: "下部廊下" }, floor: 7, connections: [{ to: "f7_room_upper", dir: "left" }, { to: "f7_room_lower", dir: "right" }, { to: "f7_elev", dir: "left" }] },
   "f7_room_upper": { name: { ko: "객실 앞", ja: "客室前" }, short: { ko: "720~725호", ja: "720~725号" }, floor: 7, connections: [{ to: "f7_cor_upper", dir: "right" }] },
   "f7_room_lower": { name: { ko: "객실 앞", ja: "客室前" }, short: { ko: "726~730호", ja: "726~730号" }, floor: 7, connections: [{ to: "f7_cor_lower", dir: "left" }] },
 };
@@ -208,14 +208,14 @@ export default function HotelLiminal(){
     if(f.eventPhase===0&&f.heardKnock&&dest==="7_room_right_b"&&!f.knockSceneSeen){
       tr(()=>{setLoc(dest);setBrightness("normal");setNavOff(false);setShowElev(false);
         setT(t("객실 앞에 다가갔다.\n\n문 앞에 누군가 서있다.\n\n직원 유니폼을 입고 있다.", "客室の前に近づいた。\n\n扉の前に誰かが立っている。\n\nスタッフの制服を着ている。"));
-        setChoices([{text:t("무슨 일 있나요?","何かありましたか？"),action:()=>{uF({knockSceneSeen:true});setT(t("\"아무것도 아닙니다.\"\n\n직원은 웃으며 대답한 후,\n비상계단 쪽으로 걸어갔다.","「何でもありません。」\n\nスタッフは微笑んで答え、\n非常階段の方へ歩いていった。"));setChoices([]);setNavOff(false);}}]);
+        setChoices([{text:t("무슨 일 있나요?","何かありましたか？"),action:()=>{uF({knockSceneSeen:true});setT(t("\"아무것도 아닙니다.\"\n\n직원은 웃으며 대답한 후,\n비상계단 쪽으로 걸어갔다.","「何でもありません。」\n\nスタッフは微笑んで答え、\n非常階段の方へ歩いていった。"));setChoices([]);setNavOff(false);}},{text:t("뒤로 물러선다","後ずさる"),action:()=>{uF({knockSceneSeen:true});setT(t("소리 없이 뒤로 물러났다.\n\n직원은 이쪽을 보지 않았다.\n\n잠시 후 비상계단 쪽으로 사라졌다.","音を立てずに後退した。\n\nスタッフはこちらを見なかった。\n\nしばらくして非常階段の方へ消えた。"));setChoices([]);setNavOff(false);}}]);
       });return;
     }
     if(f.fake7ElevCalled&&(dest==="f7_cor_upper"||dest==="f7_cor_lower")){die(t("뒤에서 무언가가 다가왔다.","後ろから何かが近づいてきた。"),8);return;}
     
     // 3F scenario: triggers blackout when entering rooms
     if(f.eventPhase===6&&f.floor3Arrived){
-      if(dest==="3_room_left_a"||dest==="3_room_left_b"){
+      if(dest==="3_room_left_a"||dest==="3_room_left_b"||dest==="3_room_right_a"||dest==="3_room_right_b"){
         snd.play("snd_powercut",{volume:0.6});
         tr(()=>{setLoc(dest);setBrightness("blackout");setNavOff(true);setShowElev(false);setCurFloor(3);
           setT(t("객실 앞까지 왔다.\n\n정전.\n\n복도 쪽에서 소리가 들린다.\n\n하나의 객실 문이 열려있다.","客室の前まで来た。\n\n停電。\n\n廊下の方から音が聞こえる。\n\n一つの客室の扉が開いている。"));
@@ -255,10 +255,11 @@ export default function HotelLiminal(){
         ]);setNavOff(false);return;
       }
       if(f.hasCardKey&&!f.lobbyPersonGone){uF({lobbyPersonGone:true,soundLocs:["1_entrance"]});setBrightness("dimNormal");setT(t("로비로 돌아왔다.\n\n아까 소파에 앉아있던 사람은 사라졌다.","ロビーに戻った。\n\nさっきソファに座っていた人は消えていた。"));setChoices([]);setNavOff(false);return;}
+      if(!f.hasCardKey&&f.metLobbyPerson&&!f.lobbyPersonGone){setBrightness("dimNormal");setT(t("새벽의 로비.\n\n소파에 앉아있는 사람이 이쪽을 보고 있다.","深夜のロビー。\n\nソファに座っている人がこちらを見ている。"));setChoices([]);setNavOff(false);return;}
       setBrightness("dimNormal");setT(t("새벽의 로비.\n\n조용하다.","深夜のロビー。\n\n静かだ。"));if(f.lobbyPersonGone&&f.entranceVisited&&!f.entranceWomanGone)uF({soundLocs:["1_entrance"]});setChoices([]);setNavOff(false);return;
     }
     if(l==="1_entrance"){
-      if(!f.entranceVisited){uF({entranceVisited:true});setBrightness("dimNormal");setT(t("정문 앞에 섰다.\n\n잠겨있다.\n\n밖에서 누군가 유리문을 두드린다.\n\n\"저기요...\n카드키를 잃어버려서 들어갈 수가 없어요.\n문 좀 열어주실 수 있나요...?\"","正門の前に立った。\n\n施錠されている。\n\n外で誰かがガラス扉を叩いている。\n\n「すみません...\nカードキーを失くしてしまって入れないんです。\n扉を開けていただけませんか...？」"));setChoices([{text:t("문을 열어준다","扉を開ける"),action:()=>die(t("밖에는 아무도 없었다.","外には誰もいなかった。"),16)}]);setNavOff(false);return;
+      if(!f.entranceVisited){uF({entranceVisited:true});setBrightness("dimNormal");setT(t("정문 앞에 섰다.\n\n잠겨있다.\n\n밖에서 누군가 유리문을 두드린다.\n\n\"저기요...\n카드키를 잃어버려서 들어갈 수가 없어요.\n문 좀 열어주실 수 있나요...?\"","正門の前に立った。\n\n施錠されている。\n\n外で誰かがガラス扉を叩いている。\n\n「すみません...\nカードキーを失くしてしまって入れないんです。\n扉を開けていただけませんか...？」"));setChoices([{text:t("문을 열어준다","扉を開ける"),action:()=>die(t("밖에는 아무도 없었다.","外には誰もいなかった。"),16)},{text:t("무시한다","無視する"),action:()=>{setT(t("새벽에는 정문이 잠겨있는 게 맞다.\n\n돌아서서 로비로 향한다.","深夜は正門が施錠されているのが正しい。\n\n振り返ってロビーに向かう。"));setChoices([]);setNavOff(false);}}]);setNavOff(false);return;
     }
       if(f.hasCardKey&&!f.entranceWomanGone){uF({entranceWomanGone:true,soundLocs:[]});setT(t("다시 정문 앞에 왔다.\n\n아무도 없다.\n\n아까 밖에 있던 여자도 보이지 않는다.","再び正門に来た。\n\n誰もいない。\n\nさっき外にいた女性も見当たらない。"));setChoices([]);setNavOff(false);return;}
       setT(t("잠긴 정문.\n\n밖은 어둡다.","施錠された正門。\n\n外は暗い。"));setChoices([]);setNavOff(false);return;
@@ -272,7 +273,7 @@ export default function HotelLiminal(){
       setT(t("프론트 데스크.\n\n직원은 다시 안쪽으로 들어갔다.","フロントデスク。\n\nスタッフは再び奥へと戻っていった。"));setChoices([]);setNavOff(false);return;
     }
     if(l==="1_elev_area"){
-      if(f.hasCardKey){setBrightness("normal");setShowElev(false);setT(t("엘리베이터 앞에 섰다.","エレベーターの前に立った。"));setChoices([{text:t("엘리베이터를 부른다","エレ베이터를呼ぶ"),action:()=>startElevUp()}]);setNavOff(false);return;}
+      if(f.hasCardKey){setBrightness("normal");setShowElev(false);setT(t("엘리베이터 앞에 섰다.","エレベーターの前に立った。"));setChoices([{text:t("엘리베이터를 부른다","エレベーターを呼ぶ"),action:()=>startElevUp()}]);setNavOff(false);return;}
       setBrightness("normal");setT(t("엘리베이터 앞.\n\n먼저 카드키를 받아야 할 것 같다.","エレベーター前。\n\n先にカードキーを受け取る必要がありそうだ。"));setChoices([]);setNavOff(false);return;
     }
     // Fake7
@@ -297,24 +298,25 @@ export default function HotelLiminal(){
         uF({floor3Arrived:true,soundLocs:["3_corridor_lower","__stairs_3f"]});
         setBrightness("dark");setShowElev(true);setElevInitFloor("7");setElevSeq(null);setElevAuto(false);
         snd.play("snd_knock",{volume:0.5});
-        setT(t("3층에 도착했다.\n\n근처에서 노크 소리가 들린다.","3階に到着した。\n\n近くでノックの音が聞こえる。"));setChoices([{text:t("엘리베이터를 부른다","エレ베이터を呼ぶ"),action:()=>call3FElev()}]);setNavOff(false);return;
+        setT(t("3층에 도착했다.\n\n근처에서 노크 소리가 들린다.","3階に到着した。\n\n近くでノックの音が聞こえる。"));setChoices([{text:t("엘리베이터를 부른다","エレベーターを呼ぶ"),action:()=>call3FElev()}]);setNavOff(false);return;
       }
-      setBrightness("dark");setT(t("3층 엘리베이터 앞.","3階エレベ이터前。"));setChoices([]);setNavOff(false);return;
+      setBrightness("dark");setT(t("3층 엘리베이터 앞.","3階エレベーター前。"));setChoices([]);setNavOff(false);return;
     }
     if(l==="3_corridor_upper"&&f.eventPhase===6&&f.floor3Arrived){
-      uF({soundLocs:["3_elev_area"]});setBrightness("dark");setT(t("상부 복도로 왔다.\n\n엘리베이터 쪽에서 소리가 들린다.","上部廊下に来た。\n\nエレ베이터の方から音が聞こえる。"));setChoices([]);setNavOff(false);return;
+      uF({soundLocs:["3_elev_area"]});setBrightness("dark");setT(t("상부 복도로 왔다.\n\n엘리베이터 쪽에서 소리가 들린다.","上部廊下に来た。\n\nエレベーターの方から音が聞こえる。"));setChoices([]);setNavOff(false);return;
     }
     if(l==="3_corridor_lower"&&f.eventPhase===6&&f.floor3Arrived){
       uF({soundLocs:["3_elev_area"]});setBrightness("dark");setT(t("하부 복도로 왔다.\n\n엘리베이터 쪽에서 소리가 들린다.","下部廊下に来た。\n\nエレベーターの方から音が聞こえる。"));setChoices([]);setNavOff(false);return;
     }
     if(f.eventPhase===7&&f.floor3Hidden){
       if(l==="3_corridor_upper"||l==="3_corridor_lower"){setBrightness("normal");setT(t("복도.\n\n조용하다.","廊下。\n\n静かだ。"));setChoices([]);setNavOff(false);return;}
-      if(l==="3_elev_area"){setBrightness("normal");setShowElev(false);setT(t("엘리베이터 앞에 도착했다.","エレベーターの前に到着した。"));setChoices([{text:t("엘리베이터를 부른다","エレ베이터を呼ぶ"),action:()=>startFinalElev()},{text:t("비상계단으로 올라간다","非常階段で上がる"),action:()=>startFinalStairs()}]);setNavOff(false);return;}
+      if(l==="3_room_left_a"||l==="3_room_left_b"||l==="3_room_right_a"||l==="3_room_right_b"){setBrightness("normal");setT(t("객실 앞.\n\n모든 문이 닫혀있다.\n\n빨리 올라가야 한다.","客室前。\n\nすべての扉が閉まっている。\n\n早く上がらなければ。"));setChoices([]);setNavOff(false);return;}
+      if(l==="3_elev_area"){setBrightness("normal");setShowElev(false);setT(t("엘리베이터 앞에 도착했다.","エレベーターの前に到着した。"));setChoices([{text:t("엘리베이터를 부른다","エレベーターを呼ぶ"),action:()=>startFinalElev()},{text:t("비상계단으로 올라간다","非常階段で上がる"),action:()=>startFinalStairs()}]);setNavOff(false);return;}
     }
     const ld=LOCATIONS[l];if(ld){setT(t(ld.name.ko, ld.name.ja)+".");setChoices([]);setNavOff(false);}
   },[uF,advTime,die,tr,snd,addAccum,t]);
 
-  const getKey=useCallback(()=>{tr(()=>{uF({hasCardKey:true});setT(t("안쪽에서 직원이 나왔다.\n\n\"이런 시간에 어쩐 일이세요?\"\n\n\"카드키를 방에 두고 나왔어요.\"\n\n\"712호... 잠시만요.\"\n\n새 카드키를 건네받았다.","奥からスタッフが現れた。\n\n「こんな時間にどうされましたか？」\n\n「カードキーを部屋に置いたまま出てしまいました。」\n\n「712号室ですね... 少々お待ちください。」\n\n新しいカードキーを受け取った。"));setChoices([]);setNavOff(false);});},[tr,uF,t]);
+  const getKey=useCallback(()=>{tr(()=>{uF({hasCardKey:true});advTime(5);setT(t("안쪽에서 직원이 나왔다.\n\n\"이런 시간에 어쩐 일이세요?\"\n\n\"카드키를 방에 두고 나왔어요.\"\n\n\"712호... 잠시만요.\"\n\n새 카드키를 건네받았다.","奥からスタッフが現れた。\n\n「こんな時間にどうされましたか？」\n\n「カードキーを部屋に置いたまま出てしまいました。」\n\n「712号室ですね... 少々お待ちください。」\n\n新しいカードキーを受け取った。"));setChoices([]);setNavOff(false);});},[tr,uF,advTime,t]);
 
   // Elevators logic
   const startElevDown=useCallback(()=>{
@@ -350,13 +352,13 @@ export default function HotelLiminal(){
   const onElevDone=useCallback(()=>{
     const f=flagsRef.current;
     if(f.eventPhase===1){
-      snd.play("snd_elev",{volume:0.3});setCurFloor(1);setT(t("도착.","到着。"));setChoices([{text:t("내린다","降りる"),action:()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("1_lobby");setCurFloor(1);setShowElev(false);handleArr("1_lobby");});}}]);
+      snd.play("snd_elev",{volume:0.3});setCurFloor(1);advTime(3);setT(t("도착.","到着。"));setChoices([{text:t("내린다","降りる"),action:()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("1_lobby");setCurFloor(1);setShowElev(false);handleArr("1_lobby");});}}]);
     }else if(f.eventPhase===2&&!f.arrivedFake7){
-      snd.play("snd_elev",{volume:0.3});setCurFloor(7);setT(t("도착.","到着。"));setChoices([{text:t("내린다","降りる"),action:()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("f7_elev");setCurFloor(7);setShowElev(false);handleArr("f7_elev");});}}]);
+      snd.play("snd_elev",{volume:0.3});setCurFloor(7);advTime(3);setT(t("도착.","到着。"));setChoices([{text:t("내린다","降りる"),action:()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("f7_elev");setCurFloor(7);setShowElev(false);handleArr("f7_elev");});}}]);
     }else if(f.eventPhase===4){
-      snd.play("snd_elev",{volume:0.3});setT(t("엘리베이터가 도착했다.","エレベーターが到着した。"));setChoices([{text:t("엘리베이터에 탑승한다","エレベーターに乗り込む"),action:()=>die(t("혼자가 아니었다.","一人ではなかった。"),14)}]);timerRef.current=setTimeout(()=>{die(t("벗어나지 못했다.","逃げ出せなかった。"),5);},5000);setNavOff(false);
+      snd.play("snd_elev",{volume:0.3});setT(t("엘리베이터가 도착했다.","エレベーターが到着した。"));setChoices([{text:t("엘리베이터에 탑승한다","エレベーターに乗り込む"),action:()=>die(t("혼자가 아니었다.","一人ではなかった。"),14)}]);timerRef.current=setTimeout(()=>{die(t("벗어나지 못했다.","逃げ出せなかった。"),5);},8000);setNavOff(false);
     }else if(f.eventPhase===6){
-      uF({floor3Fled:true,soundLocs:["3_corridor_lower","3_elev_area"]});setShowElev(false);setT(t("발소리가 바로 뒤까지 왔다.","足音がすぐ後ろまで来た。"));setChoices([]);setNavOff(false);
+      snd.stop("snd_chase");uF({floor3Fled:true,soundLocs:["3_corridor_lower","3_elev_area"]});setShowElev(false);setT(t("발소리가 바로 뒤까지 왔다.","足音がすぐ後ろまで来た。"));setChoices([]);setNavOff(false);
     }else if(f.eventPhase===7){
       snd.play("snd_elev",{volume:0.3});setCurFloor(7);setT(t("도착.","到着。"));
       setChoices([{text:t("내린다","降りる"),action:()=>{tr(()=>{setPhase(PHASE.GAME);setShowElev(false);
@@ -364,7 +366,7 @@ export default function HotelLiminal(){
         else{setLoc("7_room_right_b");setBrightness("normal");setCurFloor(7);setT(t("7층 복도.\n\n712호 앞에 도착했다.\n\n카드키를 댄다.\n\n찰칵.","7階の廊下。\n\n712号室の前に到着した。\n\nカードキーをかざす。\n\nガチャリ。"));setChoices([{text:t("들어간다","入る"),action:()=>{tr(()=>setPhase(PHASE.CLEAR));}}]);setNavOff(true);}
       });}}]);
     }
-  },[tr,die,uF,handleArr,snd,accumReasons,accumDie,t]);
+  },[tr,die,uF,handleArr,snd,accumReasons,accumDie,advTime,t]);
 
   // Stairways logic
   const startStDown7=useCallback(()=>{
@@ -376,8 +378,8 @@ export default function HotelLiminal(){
   const stD=useCallback(step=>{
     const labels=lang==="ko"?["","6층...","5층...","..."]:["","6階...","5階...","..."];
     if(step<=3){tr(()=>{setBrightness("blackout");setCurFloor("—");setT(t(`어둠 속에서 계속 내려간다.\n\n${labels[step]}`, `暗闇の中で降り続ける。\n\n${labels[step]}`));setChoices([{text:t("멈춘다","止まる"),action:()=>die(t("발소리가 멈췄다.","足音が止まった。"),18)},{text:t("계속 내려간다","降り続ける"),action:()=>stD(step+1)}]);});}
-    else{tr(()=>{setBrightness("normal");setCurFloor(4);setT(t("불이 켜졌다.\n\n4층.\n\n옆에 문이 보인다.\n\n위에서 발소리가 들린다.","明かりが点いた。\n\n4階。\n\n横に扉が見える。\n\n上から足音が聞こえる。"));setChoices([{text:t("4층 문으로 들어간다","4階の扉に入る"),action:()=>die(t("이곳은 호텔이 아니다.","ここはホテルではない。"),3)},{text:t("계속 내려간다","降り続ける"),action:()=>{tr(()=>{setBrightness("normal");setCurFloor(1);uF({stairsFrom7Done:true,eventPhase:2});snd.startBg();setT(t("계속 내려간다.\n\n3...\n2...\n1.\n\n1층에 도착했다.","さらに降りる。\n\n3...\n2...\n1.\n\n1階に到着した。"));setChoices([{text:t("1층으로 나간다","1階に出る"),action:()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("1_lobby");setCurFloor(1);handleArr("1_lobby");});}}]);});}}]);});}
-  },[tr,die,uF,handleArr,snd,t,lang]);
+    else{tr(()=>{setBrightness("normal");setCurFloor(4);setT(t("불이 켜졌다.\n\n4층.\n\n옆에 문이 보인다.\n\n위에서 발소리가 들린다.","明かりが点いた。\n\n4階。\n\n横に扉が見える。\n\n上から足音が聞こえる。"));setChoices([{text:t("4층 문으로 들어간다","4階の扉に入る"),action:()=>die(t("이곳은 호텔이 아니다.","ここはホテルではない。"),3)},{text:t("계속 내려간다","降り続ける"),action:()=>{tr(()=>{setBrightness("normal");setCurFloor(1);uF({stairsFrom7Done:true,eventPhase:2});snd.startBg();advTime(5);setT(t("계속 내려간다.\n\n3...\n2...\n1.\n\n1층에 도착했다.","さらに降りる。\n\n3...\n2...\n1.\n\n1階に到着した。"));setChoices([{text:t("1층으로 나간다","1階に出る"),action:()=>{tr(()=>{setPhase(PHASE.GAME);setLoc("1_lobby");setCurFloor(1);handleArr("1_lobby");});}}]);});}}]);});}
+  },[tr,die,uF,handleArr,snd,advTime,t,lang]);
 
   const startSt7AD=useCallback(()=>{
     if(timerRef.current){clearTimeout(timerRef.current);timerRef.current=null;}
@@ -400,7 +402,7 @@ export default function HotelLiminal(){
         uF({floor3Arrived:true,soundLocs:["3_corridor_lower","__stairs_3f"]});
         setBrightness("dark");setShowElev(true);setElevInitFloor("7");setElevSeq(null);setElevAuto(false);
         snd.play("snd_knock",{volume:0.5});setT(t("3층에 도착했다.\n\n근처에서 노크 소리가 들린다.","3階に到着した。\n\n近くでノックの音が聞こえる。"));
-        setChoices([{text:t("엘리베이터를 부른다","엘리베이터를呼ぶ"),action:()=>call3FElev()}]);setNavOff(false);});
+        setChoices([{text:t("엘리베이터를 부른다","エレベーターを呼ぶ"),action:()=>call3FElev()}]);setNavOff(false);});
     }}]);});}
   },[tr,uF,snd,t]);
 
