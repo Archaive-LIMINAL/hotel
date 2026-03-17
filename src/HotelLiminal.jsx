@@ -219,7 +219,7 @@ export default function HotelLiminal(){
     // 3F sound death - any phase during floor3
     if(f.eventPhase===6&&f.floor3Arrived){
       // After fled: rooms trigger blackout event, not sound death
-      if(f.floor3Fled&&(dest==="3_room_left_a"||dest==="3_room_left_b")){
+      if(dest==="3_room_left_a"||dest==="3_room_left_b"){
         snd.play("snd_powercut",{volume:0.6});
         tr(()=>{setLoc(dest);setBrightness("blackout");setNavOff(true);setShowElev(false);setCurFloor(3);
           setT("객실 앞까지 왔다.\n\n정전.\n\n복도 쪽에서 소리가 들린다.\n\n하나의 객실 문이 열려있다.");
