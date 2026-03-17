@@ -259,7 +259,7 @@ export default function HotelLiminal(){
       setBrightness("dimNormal");setT(t("새벽의 로비.\n\n조용하다.","深夜のロビー。\n\n静かだ。"));if(f.lobbyPersonGone&&f.entranceVisited&&!f.entranceWomanGone)uF({soundLocs:["1_entrance"]});setChoices([]);setNavOff(false);return;
     }
     if(l==="1_entrance"){
-      if(!f.entranceVisited){uF({entranceVisited:true});setBrightness("dimNormal");setT(t("정문 앞에 섰다.\n\n잠겨있다.\n\n밖에서 누군가 유리문을 두드린다.\n\n\"저기요...\n카드키를 잃어버려서 들어갈 수가 없어요.\n문 좀 열어주실 수 있나요...?\"","正門の前に立った。\n\n施錠されている。\n\n外で誰かがガラス扉を叩いている。\n\n「すみません...\nカードキーを失くしてしまって入れないんです。\n扉を開けていただけませんか...？」"));setChoices([{text:t("문을 열어준다","扉を開ける"),action:()=>die(t("밖에는 아무도 없었다.","外には誰もいなかった。"),16)},{text:t("무시한다","無視する"),action:()=>{setT(t("새벽에는 정문이 잠겨있는 게 맞다.\n\n돌아서서 로비로 향한다.","深夜は正門が施錠されているのが正しい。\n\n振り返ってロビーに向かう。"));setChoices([]);setNavOff(false);}}]);setNavOff(false);return;
+      if(!f.entranceVisited){uF({entranceVisited:true});setBrightness("dimNormal");setT(t("정문 앞에 섰다.\n\n잠겨있다.\n\n밖에서 누군가 유리문을 두드린다.\n\n\"저기요...\n카드키를 잃어버려서 들어갈 수가 없어요.\n문 좀 열어주실 수 있나요...?\"","正門の前に立った。\n\n施錠されている。\n\n外で誰かがガラス扉を叩いている。\n\n「すみません...\nカードキーを失くしてしまって入れないんです。\n扉を開けていただけませんか...？」"));setChoices([{text:t("문을 열어준다","扉を開ける"),action:()=>die(t("밖에는 아무도 없었다.","外には誰もいなかった。"),16)}]);setNavOff(false);return;
     }
       if(f.hasCardKey&&!f.entranceWomanGone){uF({entranceWomanGone:true,soundLocs:[]});setT(t("다시 정문 앞에 왔다.\n\n아무도 없다.\n\n아까 밖에 있던 여자도 보이지 않는다.","再び正門に来た。\n\n誰もいない。\n\nさっき外にいた女性も見当たらない。"));setChoices([]);setNavOff(false);return;}
       setT(t("잠긴 정문.\n\n밖은 어둡다.","施錠された正門。\n\n外は暗い。"));setChoices([]);setNavOff(false);return;
@@ -488,8 +488,8 @@ export default function HotelLiminal(){
       .nav-btn{display:flex;align-items:center;gap:.3em;background:none;border:none;color:#7a7570;font-family:'Noto Sans KR',sans-serif;font-size:.82rem;font-weight:300;cursor:pointer;padding:.35em .2em;transition:color .2s;letter-spacing:.05em;white-space:nowrap}
       .nav-btn:hover{color:#b0a898}
       .nav-arrow{font-size:.9rem;color:#5a5550}
-      .nav-sound{color:#8a4030;font-size:.6rem;animation:soundPulse 1s ease infinite}
-      @keyframes soundPulse{0%,100%{opacity:1}50%{opacity:.3}}
+      .nav-sound{font-size:.7rem;opacity:.45;animation:soundPulse 1.5s ease infinite}
+      @keyframes soundPulse{0%,100%{opacity:.45}50%{opacity:.15}}
       .title-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem}
       .title-number{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;color:rgba(180,150,100,.12);letter-spacing:.3em;line-height:1}
       .title-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;letter-spacing:.5em;color:#a09080;margin-bottom:1.5rem}
@@ -560,8 +560,8 @@ export default function HotelLiminal(){
             {textDone&&choices.length>0&&(<div className="choices-area">{choices.map((c,i)=>(<button key={i} className="choice-btn" onClick={c.action}>{c.text}</button>))}</div>)}
           </div>
           {textDone&&(<div className="nav-area">
-            <div className="nav-col nav-col-left">{nav.left.map(n=>(<button key={n.id} className="nav-btn" onClick={()=>handleNavClick(n.id)}><span className="nav-arrow">←</span>{n.label}{n.hasSound&&<span className="nav-sound">♪</span>}</button>))}</div>
-            <div className="nav-col nav-col-right">{nav.right.map(n=>(<button key={n.id} className="nav-btn" onClick={()=>handleNavClick(n.id)}>{n.hasSound&&<span className="nav-sound">♪</span>}{n.label}<span className="nav-arrow">→</span></button>))}</div>
+            <div className="nav-col nav-col-left">{nav.left.map(n=>(<button key={n.id} className="nav-btn" onClick={()=>handleNavClick(n.id)}><span className="nav-arrow">←</span>{n.label}{n.hasSound&&<span className="nav-sound">🔊</span>}</button>))}</div>
+            <div className="nav-col nav-col-right">{nav.right.map(n=>(<button key={n.id} className="nav-btn" onClick={()=>handleNavClick(n.id)}>{n.hasSound&&<span className="nav-sound">🔊</span>}{n.label}<span className="nav-arrow">→</span></button>))}</div>
           </div>)}
         </>)}
       </div>
