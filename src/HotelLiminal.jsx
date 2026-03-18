@@ -446,11 +446,12 @@ export default function HotelLiminal(){
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Sans+KR:wght@200;300;400;500&display=swap');
       *{box-sizing:border-box;margin:0;padding:0}
-      .game-root{font-family:'Noto Sans KR',sans-serif;background:#08080a;color:#d4d0cb;min-height:100vh;display:flex;justify-content:center;position:relative;overflow-x:hidden}
-      .game-frame{width:100%;max-width:520px;min-height:100vh;position:relative;z-index:1;display:flex;flex-direction:column;transition:opacity .5s ease}
+      html,body{height:100%;overflow:hidden}
+      .game-root{font-family:'Noto Sans KR',sans-serif;background:#08080a;color:#d4d0cb;height:100vh;display:flex;justify-content:center;position:relative;overflow:hidden}
+      .game-frame{width:100%;max-width:520px;height:100vh;position:relative;z-index:1;display:flex;flex-direction:column;transition:opacity .5s ease;overflow:hidden}
       .game-frame.fading{opacity:0}
-      .game-content{flex:1;padding:1.2rem 1.5rem .5rem;display:flex;flex-direction:column}
-      .scene-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.6rem;gap:.6rem;position:relative;z-index:60;background:#08080a;padding-top:.2rem}
+      .game-content{flex:1;padding:1.2rem 1.5rem .5rem;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+      .scene-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.6rem;gap:.6rem;position:relative;z-index:60;background:#08080a;padding-top:.2rem;flex-shrink:0}
       .header-left{display:flex;align-items:baseline;gap:.7rem}
       .floor-ind{display:flex;align-items:baseline;gap:.1em;background:#0c0c10;border:1px solid #1a1a22;border-radius:4px;padding:.2rem .5rem;min-width:2.5rem;justify-content:center}
       .floor-num{font-family:'Courier New',monospace;font-size:1.3rem;font-weight:400;color:#8a4030;line-height:1;min-width:.8em;text-align:center}
@@ -461,7 +462,7 @@ export default function HotelLiminal(){
       @keyframes floorUp{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:translateY(0)}}
       .scene-location{font-size:.72rem;color:#706a62;letter-spacing:.12em}
       .scene-time{font-family:'Cormorant Garamond',serif;font-size:.82rem;color:#8a4030;letter-spacing:.1em;font-weight:300}
-      .scene-divider{height:1px;background:linear-gradient(90deg,#2a2520,transparent);margin-bottom:.8rem}
+      .scene-divider{height:1px;background:linear-gradient(90deg,#2a2520,transparent);margin-bottom:.8rem;flex-shrink:0}
       .text-advance-overlay{position:fixed;inset:0;z-index:55;cursor:pointer}
       .elev-display-area{width:100%;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0c0c10;border:1px solid rgba(255,255,255,.04);border-radius:4px;margin-bottom:.8rem;padding:.6rem}
       .elev-display-frame{background:#08080c;border:1px solid #16161e;border-radius:4px;padding:.5rem .7rem;min-width:70px;text-align:center}
@@ -472,16 +473,16 @@ export default function HotelLiminal(){
       .pause-pulse{animation:pausePulse 1s ease infinite}
       @keyframes pausePulse{0%,100%{opacity:1}50%{opacity:.4}}
       .elev-display-status-slot{font-size:.6rem;color:#5a5550;letter-spacing:.15em;margin-top:.3rem;min-height:1em}
-      .scene-text{flex:1;font-size:.88rem;line-height:1.85;color:#b5b0a8;font-weight:300;letter-spacing:.01em;margin-bottom:.6rem;min-height:60px}
+      .scene-text{flex:1;font-size:.88rem;line-height:1.85;color:#b5b0a8;font-weight:300;letter-spacing:.01em;margin-bottom:.6rem;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
       .cursor-blink{color:#8a4030;animation:blink 1s steps(1) infinite}
       @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
       .text-continue{display:block;text-align:center;color:#4a4540;font-size:.65rem;margin-top:.3rem;animation:pulse 1.5s ease infinite}
       @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
-      .choices-area{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.6rem;animation:fadeUp .5s ease;position:relative;z-index:60}
+      .choices-area{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.6rem;animation:fadeUp .5s ease;position:relative;z-index:60;flex-shrink:0}
       @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
       .choice-btn{background:#12121a;border:1px solid rgba(255,255,255,.12);color:#c0b8ae;font-family:'Noto Sans KR',sans-serif;font-size:.8rem;font-weight:300;padding:.7em 1em;text-align:center;cursor:pointer;transition:all .3s ease;position:relative;z-index:60}
       .choice-btn:hover{background:#1a1a24;border-color:rgba(150,120,80,.4);color:#e0d8ce}
-      .nav-area{padding:.4rem 1.5rem .8rem;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:60;min-height:2.5rem;background:#08080a}
+      .nav-area{padding:.4rem 1.5rem .8rem;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:60;min-height:2.5rem;background:#08080a;flex-shrink:0}
       .nav-col{display:flex;flex-direction:column;gap:.2rem;min-width:40%}
       .nav-col-left{align-items:flex-start}
       .nav-col-right{align-items:flex-end}
@@ -490,7 +491,7 @@ export default function HotelLiminal(){
       .nav-arrow{font-size:.9rem;color:#5a5550}
       .nav-sound{font-size:.7rem;opacity:.45;animation:soundPulse 1.5s ease infinite}
       @keyframes soundPulse{0%,100%{opacity:.45}50%{opacity:.15}}
-      .title-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem}
+      .title-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:2rem}
       .title-number{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;color:rgba(180,150,100,.12);letter-spacing:.3em;line-height:1}
       .title-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;letter-spacing:.5em;color:#a09080;margin-bottom:1.5rem}
       .title-divider{width:50px;height:1px;background:linear-gradient(90deg,transparent,#555,transparent);margin:0 auto 1.5rem}
@@ -511,10 +512,10 @@ export default function HotelLiminal(){
       .rules-footer{text-align:center}
       .rules-btn{background:transparent;border:1px solid #c0b8a8;color:#6a6055;font-family:'Noto Sans KR',sans-serif;font-size:.73rem;padding:.6em 2em;cursor:pointer;letter-spacing:.1em;transition:all .3s ease;font-weight:300}
       .rules-btn:hover{border-color:#8a7a6a;color:#3a3530}
-      .death-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem}
+      .death-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:2rem;overflow-y:auto}
       .death-text{font-size:1rem;color:#8a3030;letter-spacing:.15em;margin-bottom:2rem;animation:deathFade 1.5s ease}
       @keyframes deathFade{from{opacity:0;filter:blur(6px)}to{opacity:1;filter:blur(0)}}
-      .clear-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem}
+      .clear-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:2rem}
       .clear-text{font-size:.95rem;color:#a09888;line-height:2;font-weight:300;margin-bottom:1.5rem;animation:clearIn 2.5s ease}
       .clear-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#8a9a70;letter-spacing:.4em;margin-bottom:2rem;animation:clearIn 3s ease}
       @keyframes clearIn{from{opacity:0}to{opacity:1}}
