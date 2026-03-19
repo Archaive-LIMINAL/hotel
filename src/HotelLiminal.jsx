@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 /* ═══════════════════════════════════════════
-   DATA - Localized Rules & Constants
+   DATA - Localized Rules & Constants 
    ═══════════════════════════════════════════ */
 const RULES = {
   ko: [
