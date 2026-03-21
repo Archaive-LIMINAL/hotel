@@ -450,8 +450,8 @@ export default function HotelLiminal(){
       .game-root{font-family:'Noto Sans KR',sans-serif;background:#08080a;color:#d4d0cb;height:100vh;display:flex;justify-content:center;position:relative;overflow:hidden}
       .game-frame{width:100%;max-width:520px;height:100vh;position:relative;z-index:1;display:flex;flex-direction:column;transition:opacity .5s ease;overflow:hidden}
       .game-frame.fading{opacity:0}
-      .game-content{flex:1;padding:1.2rem 1.5rem .5rem;display:flex;flex-direction:column;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
-      .scene-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.6rem;gap:.6rem;position:sticky;top:0;z-index:60;background:#08080a;padding-top:.2rem;flex-shrink:0}
+      .game-content{flex:1;padding:1.2rem 1.5rem .5rem;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+      .scene-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.6rem;gap:.6rem;position:relative;z-index:60;background:#08080a;padding-top:.2rem;flex-shrink:0}
       .header-left{display:flex;align-items:baseline;gap:.7rem}
       .floor-ind{display:flex;align-items:baseline;gap:.1em;background:#0c0c10;border:1px solid #1a1a22;border-radius:4px;padding:.2rem .5rem;min-width:2.5rem;justify-content:center}
       .floor-num{font-family:'Courier New',monospace;font-size:1.3rem;font-weight:400;color:#8a4030;line-height:1;min-width:.8em;text-align:center}
@@ -473,12 +473,12 @@ export default function HotelLiminal(){
       .pause-pulse{animation:pausePulse 1s ease infinite}
       @keyframes pausePulse{0%,100%{opacity:1}50%{opacity:.4}}
       .elev-display-status-slot{font-size:.6rem;color:#5a5550;letter-spacing:.15em;margin-top:.3rem;min-height:1em}
-      .scene-text{font-size:.88rem;line-height:1.85;color:#b5b0a8;font-weight:300;letter-spacing:.01em;margin-bottom:.6rem;flex-shrink:0}
+      .scene-text{flex:1;font-size:.88rem;line-height:1.85;color:#b5b0a8;font-weight:300;letter-spacing:.01em;margin-bottom:.6rem;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
       .cursor-blink{color:#8a4030;animation:blink 1s steps(1) infinite}
       @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
       .text-continue{display:block;text-align:center;color:#4a4540;font-size:.65rem;margin-top:.3rem;animation:pulse 1.5s ease infinite}
       @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
-      .choices-area{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.6rem;animation:fadeUp .5s ease;position:relative;z-index:60;flex-shrink:0}
+      .choices-area{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.6rem;padding:0 1.5rem;animation:fadeUp .5s ease;position:relative;z-index:60;flex-shrink:0}
       @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
       .choice-btn{background:#12121a;border:1px solid rgba(255,255,255,.12);color:#c0b8ae;font-family:'Noto Sans KR',sans-serif;font-size:.8rem;font-weight:300;padding:.7em 1em;text-align:center;cursor:pointer;transition:all .3s ease;position:relative;z-index:60}
       .choice-btn:hover{background:#1a1a24;border-color:rgba(150,120,80,.4);color:#e0d8ce}
@@ -558,8 +558,8 @@ export default function HotelLiminal(){
             <div className="scene-divider"/>
             {showElev&&<ElevatorDisplay sequence={elevSeq} onComplete={onElevDone} initialFloor={elevInitFloor} autoStart={elevAuto} lang={lang}/>}
             <div className="scene-text"><TypewriterLines key={textLines.join("|")} lines={textLines} onAllDone={()=>setTextDone(true)} advanceRef={advRef}/></div>
-            {textDone&&choices.length>0&&(<div className="choices-area">{choices.map((c,i)=>(<button key={i} className="choice-btn" onClick={c.action}>{c.text}</button>))}</div>)}
           </div>
+          {textDone&&choices.length>0&&(<div className="choices-area">{choices.map((c,i)=>(<button key={i} className="choice-btn" onClick={c.action}>{c.text}</button>))}</div>)}
           {textDone&&(<div className="nav-area">
             <div className="nav-col nav-col-left">{nav.left.map(n=>(<button key={n.id} className="nav-btn" onClick={()=>handleNavClick(n.id)}><span className="nav-arrow">←</span>{n.label}{n.hasSound&&<span className="nav-sound">🔊</span>}</button>))}</div>
             <div className="nav-col nav-col-right">{nav.right.map(n=>(<button key={n.id} className="nav-btn" onClick={()=>handleNavClick(n.id)}>{n.hasSound&&<span className="nav-sound">🔊</span>}{n.label}<span className="nav-arrow">→</span></button>))}</div>
