@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 /* ═══════════════════════════════════════════
-   DATA - Localized Rules & Constants 
+   DATA - Localized Rules & Constants
    ═══════════════════════════════════════════ */
 const RULES = {
   ko: [
@@ -12,7 +12,7 @@ const RULES = {
     "5. Wi-Fi는 HOTEL_LIMINAL (비밀번호: LMN2025)로 이용 가능합니다.",
     "6. 각 층 객실 번호는 01번부터 20번까지 배정되어 있습니다. 이외의 객실 번호가 확인되는 경우, 해당 층에서 즉시 벗어나십시오.",
     "7. 객실 내 흡연은 금지되어 있습니다.",
-    "8. 사용하지 않는 객실은 잠긴채로 닫혀있습니다. 문이 열려있는 객실에는 다른 투숙객이 있을 수 있으니 주의하시기 바랍니다.",
+    "8. 사용하지 않는 객실은 잠겨있습니다. 문이 열려있는 객실에는 다른 투숙객이 있을 수 있으니 주의하시기 바랍니다.",
     "9. 저희 직원은 객실 문을 노크하지 않습니다.",
     "10. 카드키 분실 시 프론트 데스크에서 재발급이 가능합니다.",
     "11. 귀중품 분실에 대해 호텔은 책임을 지지 않습니다.",
@@ -34,7 +34,7 @@ const RULES = {
     "5. Wi-Fiは HOTEL_LIMINAL (パスワード: LMN2025) が利用可能です。",
     "6. 各階の客室番号は01番から20番までです。それ以外の番号を確認した場合は、直ちにその階から離れてください。",
     "7. 客室内は禁煙です。",
-    "8. 使用されていない客室は施錠されたまま閉まっています。 ドアが開いている客室には他の宿泊客がいる可能性があるため、ご注意ください。",
+    "8. 使用していない客室は施錠されています。扉が開いている客室には他の宿泊客がいる可能性があるため、ご注意ください。",
     "9. スタッフが客室をノックすることはありません。",
     "10. カードキー紛失時はフロントデスクにて再発行が可能です。",
     "11. 貴重品の紛失について、ホテルは一切の責任を負いません。",
@@ -450,8 +450,8 @@ export default function HotelLiminal(){
       .game-root{font-family:'Noto Sans KR',sans-serif;background:#08080a;color:#d4d0cb;height:100vh;display:flex;justify-content:center;position:relative;overflow:hidden}
       .game-frame{width:100%;max-width:520px;height:100vh;position:relative;z-index:1;display:flex;flex-direction:column;transition:opacity .5s ease;overflow:hidden}
       .game-frame.fading{opacity:0}
-      .game-content{flex:1;padding:1.2rem 1.5rem .5rem;display:flex;flex-direction:column;overflow:hidden;min-height:0}
-      .scene-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.6rem;gap:.6rem;position:relative;z-index:60;background:#08080a;padding-top:.2rem;flex-shrink:0}
+      .game-content{flex:1;padding:1.2rem 1.5rem .5rem;display:flex;flex-direction:column;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+      .scene-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.6rem;gap:.6rem;position:sticky;top:0;z-index:60;background:#08080a;padding-top:.2rem;flex-shrink:0}
       .header-left{display:flex;align-items:baseline;gap:.7rem}
       .floor-ind{display:flex;align-items:baseline;gap:.1em;background:#0c0c10;border:1px solid #1a1a22;border-radius:4px;padding:.2rem .5rem;min-width:2.5rem;justify-content:center}
       .floor-num{font-family:'Courier New',monospace;font-size:1.3rem;font-weight:400;color:#8a4030;line-height:1;min-width:.8em;text-align:center}
@@ -473,7 +473,7 @@ export default function HotelLiminal(){
       .pause-pulse{animation:pausePulse 1s ease infinite}
       @keyframes pausePulse{0%,100%{opacity:1}50%{opacity:.4}}
       .elev-display-status-slot{font-size:.6rem;color:#5a5550;letter-spacing:.15em;margin-top:.3rem;min-height:1em}
-      .scene-text{flex:1;font-size:.88rem;line-height:1.85;color:#b5b0a8;font-weight:300;letter-spacing:.01em;margin-bottom:.6rem;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+      .scene-text{font-size:.88rem;line-height:1.85;color:#b5b0a8;font-weight:300;letter-spacing:.01em;margin-bottom:.6rem;flex-shrink:0}
       .cursor-blink{color:#8a4030;animation:blink 1s steps(1) infinite}
       @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
       .text-continue{display:block;text-align:center;color:#4a4540;font-size:.65rem;margin-top:.3rem;animation:pulse 1.5s ease infinite}
