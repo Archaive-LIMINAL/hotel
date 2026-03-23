@@ -166,6 +166,13 @@ export default function HotelLiminal(){
   const[lang,setLang]=useState("ko");
   const t=useCallback((ko,ja)=>lang==="ko"?ko:ja,[lang]);
 
+  useEffect(()=>{
+    const setVh=()=>document.documentElement.style.setProperty('--vh',`${window.innerHeight}px`);
+    setVh();
+    window.addEventListener('resize',setVh);
+    return()=>window.removeEventListener('resize',setVh);
+  },[]);
+
   const[phase,setPhase]=useState(PHASE.TITLE);
   const[loc,setLoc]=useState("7_room_right_b");
   const[brightness,setBrightness]=useState("normal");
@@ -447,8 +454,8 @@ export default function HotelLiminal(){
       @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Sans+KR:wght@200;300;400;500&display=swap');
       *{box-sizing:border-box;margin:0;padding:0}
       html,body{height:100%;overflow:hidden}
-      .game-root{font-family:'Noto Sans KR',sans-serif;background:#08080a;color:#d4d0cb;height:100vh;display:flex;justify-content:center;position:relative;overflow:hidden}
-      .game-frame{width:100%;max-width:520px;height:100vh;position:relative;z-index:1;display:flex;flex-direction:column;transition:opacity .5s ease;overflow:hidden}
+      .game-root{font-family:'Noto Sans KR',sans-serif;background:#08080a;color:#d4d0cb;height:var(--vh);display:flex;justify-content:center;position:relative;overflow:hidden}
+      .game-frame{width:100%;max-width:520px;height:var(--vh);position:relative;z-index:1;display:flex;flex-direction:column;transition:opacity .5s ease;overflow:hidden}
       .game-frame.fading{opacity:0}
       .game-content{flex:1;padding:1.2rem 1.5rem .5rem;display:flex;flex-direction:column;overflow:hidden;min-height:0}
       .scene-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.6rem;gap:.6rem;position:relative;z-index:60;background:#08080a;padding-top:.2rem;flex-shrink:0}
@@ -478,7 +485,7 @@ export default function HotelLiminal(){
       @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
       .text-continue{display:block;text-align:center;color:#4a4540;font-size:.65rem;margin-top:.3rem;animation:pulse 1.5s ease infinite}
       @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
-      .choices-area{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.6rem;padding:0 1.5rem;animation:fadeUp .5s ease;position:relative;z-index:60;flex-shrink:0}
+      .choices-area{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.6rem;animation:fadeUp .5s ease;position:relative;z-index:60;flex-shrink:0}
       @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
       .choice-btn{background:#12121a;border:1px solid rgba(255,255,255,.12);color:#c0b8ae;font-family:'Noto Sans KR',sans-serif;font-size:.8rem;font-weight:300;padding:.7em 1em;text-align:center;cursor:pointer;transition:all .3s ease;position:relative;z-index:60}
       .choice-btn:hover{background:#1a1a24;border-color:rgba(150,120,80,.4);color:#e0d8ce}
@@ -558,8 +565,8 @@ export default function HotelLiminal(){
             <div className="scene-divider"/>
             {showElev&&<ElevatorDisplay sequence={elevSeq} onComplete={onElevDone} initialFloor={elevInitFloor} autoStart={elevAuto} lang={lang}/>}
             <div className="scene-text"><TypewriterLines key={textLines.join("|")} lines={textLines} onAllDone={()=>setTextDone(true)} advanceRef={advRef}/></div>
+            {textDone&&choices.length>0&&(<div className="choices-area">{choices.map((c,i)=>(<button key={i} className="choice-btn" onClick={c.action}>{c.text}</button>))}</div>)}
           </div>
-          {textDone&&choices.length>0&&(<div className="choices-area">{choices.map((c,i)=>(<button key={i} className="choice-btn" onClick={c.action}>{c.text}</button>))}</div>)}
           {textDone&&(<div className="nav-area">
             <div className="nav-col nav-col-left">{nav.left.map(n=>(<button key={n.id} className="nav-btn" onClick={()=>handleNavClick(n.id)}><span className="nav-arrow">←</span>{n.label}{n.hasSound&&<span className="nav-sound">🔊</span>}</button>))}</div>
             <div className="nav-col nav-col-right">{nav.right.map(n=>(<button key={n.id} className="nav-btn" onClick={()=>handleNavClick(n.id)}>{n.hasSound&&<span className="nav-sound">🔊</span>}{n.label}<span className="nav-arrow">→</span></button>))}</div>
